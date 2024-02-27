@@ -23,17 +23,18 @@ MenuItem *Menu::getItems() {
 }
 
 void Menu::print() {
+    std::cout << std::endl;
     for (size_t i{}; i < count; ++i) {
         std::cout << i + 1 << ". ";
         items[i].print();
         std::cout << std::endl;
     }
-    std::cout << "0. exit" << std::endl;
+    std::cout << "0. exit" << std::endl << std::endl;
 }
 
 int Menu::runCommand() {
     print();
-    std::cout << "\n\n\tSelect >> ";
+    std::cout << "\tSelect >> ";
     for (;;) {
         std::cin >> select;
         if (select < 0 || select > count) {
