@@ -34,12 +34,14 @@ void Menu::print() {
 int Menu::runCommand() {
     print();
     std::cout << "\n\n\tSelect >> ";
-    do {
+    for (;;) {
         std::cin >> select;
+        if (select < 0 || select > count) {
+            cout << "Number must be in range [0;" << count <<"]" << endl;
+        } else if (select == 0) {
+            return 0;
+        } else {
+            return items[select - 1].run();
+        }
     }
-    while (select <= 0 || select > count);
-    if (select == 0) {
-        return 0;
-    }
-    return items[select - 1].run();
 }
