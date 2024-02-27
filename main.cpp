@@ -22,15 +22,15 @@ int GetRandomNumber() {
 }
 
 int PrintGoose() {
-    cout << "                                       ___" << endl;
-    cout << "                                   ,-\"\"   `." << endl;
-    cout << "                                 ,'  _   e )`-._" << endl;
-    cout << "                                /  ,' `-._<.===-'" << endl;
-    cout << "                               /  /" << endl;
-    cout << "                              /  ;" << endl;
-    cout << "              _              /   ;" << endl;
+    cout << "                                   ___" << endl;
+    cout << "                               ,-\"\"   `." << endl;
+    cout << "                             ,'  _   e )`-._" << endl;
+    cout << "                            /  ,' `-._<.===-'" << endl;
+    cout << "                           /  /" << endl;
+    cout << "                          /  ;" << endl;
+    cout << "          _              /   ;" << endl;
     cout << " (`._    _.-\"\" \"\"--..__,'    |" << endl;
-    cout << " <_  `-\"\"                     " << endl;
+    cout << " <_  `-\"\"                     \"" << endl;
     cout << "  <`-                          :" << endl;
     cout << "   (__   <__.                  ;" << endl;
     cout << "     `-.   '-.__.      _.'    /" << endl;
@@ -50,7 +50,7 @@ const int ITEMS_NUMBER = 3;
 
 
 int main() {
-    MenuItem items[ITEMS_NUMBER] {MenuItem("Say hello to user", SayHelloToUser), MenuItem("Get random number", GetRandomNumber), MenuItem("third item", PrintGoose)};
+    MenuItem items[ITEMS_NUMBER] {MenuItem("Say hello to user", SayHelloToUser), MenuItem("Get random number", GetRandomNumber), MenuItem("Print Goose", PrintGoose)};
     Menu menu("My console menu", items, ITEMS_NUMBER);
     while (menu.runCommand()) {};
 

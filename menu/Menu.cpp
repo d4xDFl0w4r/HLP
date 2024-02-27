@@ -33,7 +33,13 @@ void Menu::print() {
 
 int Menu::runCommand() {
     print();
-    std::cout << "\n   Select >> ";
-    std::cin >> select;
+    std::cout << "\n\n\tSelect >> ";
+    do {
+        std::cin >> select;
+    }
+    while (select <= 0 && select > count);
+    if (select == 0) {
+        return 0;
+    }
     return items[select - 1].run();
 }
