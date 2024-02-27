@@ -34,13 +34,13 @@ int PrintGoose() {
     cout << "  <`-                          :" << endl;
     cout << "   (__   <__.                  ;" << endl;
     cout << "     `-.   '-.__.      _.'    /" << endl;
-    cout << "        \      `-.__,-'    _,'" << endl;
+    cout << "        \\      `-.__,-'    _,'" << endl;
     cout << "         `._    ,    /__,-'" << endl;
-    cout << "            \"\"._\__,'< <____" << endl;
+    cout << "            \"\"._\\__,'< <____" << endl;
     cout << "                 | |  `----.`." << endl;
-    cout << "                 | |        \ `." << endl;
-    cout << "                 ; |___      \-``" << endl;
-    cout << "                 \   --<" << endl;
+    cout << "                 | |        \\ `." << endl;
+    cout << "                 ; |___      \\-``" << endl;
+    cout << "                 \\   --<" << endl;
     cout << "                  `.`.<" << endl;
     cout << "                    `-'" << endl;
     return 3;
