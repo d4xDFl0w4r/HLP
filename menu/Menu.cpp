@@ -37,7 +37,7 @@ int Menu::runCommand() {
     do {
         std::cin >> select;
     }
-    while (select <= 0 && select > count);
+    while (select <= 0 || select > count);
     if (select == 0) {
         return 0;
     }
