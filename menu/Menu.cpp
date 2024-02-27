@@ -1,28 +1,28 @@
-#include "./CMenu.h"
+#include "./Menu.h"
 
-CMenu::CMenu(string title, CMenuItem *items, size_t count) : title(title), items(items), count(count) {}
+Menu::Menu(string title, MenuItem *items, size_t count) : title(title), items(items), count(count) {}
 
-int CMenu::getSelect() const {
+int Menu::getSelect() const {
     return select;
 }
 
-bool CMenu::isRun() const {
+bool Menu::isRun() const {
     return running;
 }
 
-size_t CMenu::getCount() const {
+size_t Menu::getCount() const {
     return count;
 }
 
-string CMenu::getTitle() {
+string Menu::getTitle() {
     return title;
 }
 
-CMenuItem *CMenu::getItems() {
+MenuItem *Menu::getItems() {
     return items;
 }
 
-void CMenu::print() {
+void Menu::print() {
     for (size_t i{}; i < count; ++i) {
         std::cout << i + 1 << ". ";
         items[i].print();
@@ -31,7 +31,7 @@ void CMenu::print() {
     std::cout << "0. exit" << std::endl;
 }
 
-int CMenu::runCommand() {
+int Menu::runCommand() {
     print();
     std::cout << "\n   Select >> ";
     std::cin >> select;

@@ -1,20 +1,21 @@
-#pragma once
+#ifndef MENU_H
+#define MENU_H
 
 #include <cstddef>
 #include <string>
-#include "./CMenuItem.h"
+#include "./MenuItem.h"
 
 using namespace std;
 
 
-class CMenu {
+class Menu {
     public:
-        CMenu(string, CMenuItem *, size_t);
+        Menu(string, MenuItem *, size_t);
         int getSelect() const;
         bool isRun() const;
         string getTitle();
         size_t getCount() const;
-        CMenuItem *getItems();
+        MenuItem *getItems();
         void print();
         int runCommand();
 
@@ -23,5 +24,6 @@ class CMenu {
         size_t count{};
         bool running{};
         string title{};
-        CMenuItem *items{};
+        MenuItem *items{};
 };
+#endif //MENU_H
