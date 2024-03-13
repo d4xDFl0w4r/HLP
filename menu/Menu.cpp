@@ -29,7 +29,7 @@ void Menu::print() {
         items[i].print();
         std::cout << std::endl;
     }
-    std::cout << "0. exit" << std::endl << std::endl;
+    std::cout << std::endl;
 }
 
 int Menu::runCommand() {
@@ -37,8 +37,9 @@ int Menu::runCommand() {
     std::cout << "\tSelect >> ";
     for (;;) {
         std::cin >> select;
+        std::cout << std::endl;
         if (select < 0 || select > count) {
-            cout << "Number must be in range [0;" << count <<"]" << endl;
+            cout << "Number must be in range [1;" << count <<"]" << endl;
         } else if (select == 0) {
             return 0;
         } else {
