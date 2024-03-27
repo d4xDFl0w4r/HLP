@@ -1,12 +1,14 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 
+#include "../../time/Time.h"
+
 #include <iostream>
 #include <string>
 
 class Message {
 public:
-    Message(int id, std::string text, std::string sender, std::string date, std::string time);
+    Message(int id, std::string text, std::string sender);
 
     int getID();
     void setID(int id);
@@ -17,20 +19,20 @@ public:
     std::string getSender();
     void setSender(std::string sender);
 
-    std::string getDate();
-    void setDate(std::string date);
-
     std::string getTime();
-    void setTime(std::string time);
+    void setTime();
 
-    void Print();
+    void Print() const;
+
+    bool operator>(const Message& other);
+
+    friend std::ostream& operator<<(std::ostream& out, const Message& message);
 
 private:
     int id;
     std::string text;
     std::string sender;
-    std::string date;
-    std::string time;
+    Time time;
 };
 
 #endif //MESSAGE_H

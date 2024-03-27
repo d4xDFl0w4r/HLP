@@ -5,9 +5,6 @@
 #include <string>
 #include "./MenuItem.h"
 
-using namespace std;
-
-
 class Menu {
     public:
         Menu(string, MenuItem *, size_t);

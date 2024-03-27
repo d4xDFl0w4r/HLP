@@ -28,7 +28,7 @@ public:
     Message getMessage();
     void setMessage(Message message);
 
-    virtual void Print() = 0;
+    virtual void Print() const = 0;
 
 protected:
     std::string name;

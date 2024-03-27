@@ -14,7 +14,12 @@ public:
     bool getIsAdministrator();
     void setIsAdministrator(bool isAdministrator);
 
-    void Print() override;
+    void Print() const override;
+
+    bool operator>(const User& other);
+
+    friend std::ostream& operator<<(std::ostream& out, const User& user);
+    friend std::istream& operator>>(std::istream& in, User& user);
 
 private:
     bool isAdministrator;

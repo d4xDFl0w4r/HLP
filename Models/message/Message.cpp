@@ -1,10 +1,9 @@
 #include "./Message.h"
 
-Message::Message(int id, std::string text, std::string sender, std::string date, std::string time) {
+Message::Message(int id, std::string text, std::string sender) {
+    this->id = id;
     this->text = text;
     this->sender = sender;
-    this->date = date;
-    this->time = time;
 }
 
 int Message::getID() {
@@ -31,25 +30,26 @@ void Message::setSender(std::string sender) {
     this->sender = sender;
 }
 
-std::string Message::getDate() {
-    return date;
-}
-
-void Message::setDate(std::string date) {
-    this->date = date;
-}
-
 std::string Message::getTime() {
-    return time;
+    return time.GetDateAsString();
 }
 
-void Message::setTime(std::string time) {
-    this->time = time;
+void Message::setTime() {
+    this->time = Time();
 }
 
-void Message::Print() {
+void Message::Print() const {
+    std::cout << "ID: " << id << std::endl;
     std::cout << "Message: " << text << std::endl;
     std::cout << "Sender: " << sender << std::endl;
-    std::cout << "Date: " << date << std::endl;
-    std::cout << "Time: " << time << std::endl;
+    std::cout << "Time: " << time.GetDateAsString() << std::endl;
+}
+
+bool Message::operator>(const Message& other) {
+    return id > other.id;
+}
+
+std::ostream& operator<<(std::ostream& out, const Message& message) {
+    message.Print();
+    return out;
 }

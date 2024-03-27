@@ -12,7 +12,7 @@ void User::setIsAdministrator(bool isAdministrator) {
     this->isAdministrator = isAdministrator;
 }
 
-void User::Print() {
+void User::Print() const {
     std::cout << std::endl;
     std::cout << "Name: " << name << std::endl;
     std::cout << "Last name: " << lastName << std::endl;
@@ -22,4 +22,45 @@ void User::Print() {
     std::cout << "Administrator: " << std::boolalpha << isAdministrator << std::endl;
     message.Print();
     std::cout << std::endl;
+}
+
+bool User::operator>(const User& other) {
+    for (size_t i = 0; i < std::min(login.length(), other.login.length()); i++) {
+        if(login[i] < other.login[i]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::ostream& operator<<(std::ostream& out, const User& user) {
+    user.Print();
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, User& user) {
+    std::string buff;
+    std::cout << "Name: ";
+    getline(in, buff);
+    user.setName(buff);
+    std::cout << "Last name: ";
+    getline(in, buff);
+    user.setLastName(buff);
+    std::cout << "Age: ";
+    getline(in, buff);
+    user.setAge(stoi(buff));
+    std::cout << "Login: ";
+    getline(in, buff);
+    user.setLogin(buff);
+    std::cout << "Password: ";
+    getline(in, buff);
+    user.setPassword(buff);
+    std::cout << "Administrator (y/n): ";
+    getline(in, buff);
+    if (buff == "y") {
+        user.setIsAdministrator(true);
+    } else {
+        user.setIsAdministrator(false);
+    }
+    return in;
 }
