@@ -255,7 +255,7 @@ MenuItem mainMenuItems[MAIN_MENU_ITEMS_NUMBER] {
     MenuItem("Print Goose", PrintGoose),
     MenuItem("Test objects", TestObjects),
     MenuItem("User menu", UserMenu),
-    MenuItem("AdminMenu", AdminMenu),
+    MenuItem("Admin menu", AdminMenu),
     MenuItem("Exit", Exit)
 };
 Menu mainMenu("Program menu", mainMenuItems, MAIN_MENU_ITEMS_NUMBER);

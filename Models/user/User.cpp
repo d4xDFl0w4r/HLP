@@ -25,12 +25,7 @@ void User::Print() const {
 }
 
 bool User::operator>(const User& other) {
-    for (size_t i = 0; i < std::min(login.length(), other.login.length()); i++) {
-        if(login[i] < other.login[i]) {
-            return true;
-        }
-    }
-    return false;
+    return login > other.login;
 }
 
 std::ostream& operator<<(std::ostream& out, const User& user) {
