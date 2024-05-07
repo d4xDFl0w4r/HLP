@@ -9,6 +9,7 @@
 class User: public AbstractUser
 {
 public:
+    User();
     User(std::string name, std::string lastName, int age, std::string login, std::string password, bool isAdministrator, Message message);
 
     bool getIsAdministrator();

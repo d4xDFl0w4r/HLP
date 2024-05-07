@@ -8,6 +8,7 @@
 
 class Message {
 public:
+    Message();
     Message(int id, std::string text, std::string sender);
 
     int getID();

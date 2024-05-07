@@ -1,4 +1,11 @@
 #include "./Message.h"
+#include <string>
+
+Message::Message() {
+    id = 0;
+    text = "";
+    sender = "None";
+}
 
 Message::Message(int id, std::string text, std::string sender) {
     this->id = id;
