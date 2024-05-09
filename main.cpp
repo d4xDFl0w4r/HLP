@@ -5,7 +5,6 @@
 #include "Models/message/Message.h"
 
 #include <ctime>
-#include <vector>
 
 using namespace std;
 
@@ -249,7 +248,7 @@ int PrintUsers() {
 }
 
 
-MenuItem mainMenuItems[MAIN_MENU_ITEMS_NUMBER] {
+vector< {
     MenuItem("Say hello to user", SayHelloToUser), 
     MenuItem("Get random number", GetRandomNumber), 
     MenuItem("Print Goose", PrintGoose),
