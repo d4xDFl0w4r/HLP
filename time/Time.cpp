@@ -3,8 +3,8 @@
 Time::Time() {
     time_t tt = time(nullptr);
     day = localtime(&tt)->tm_mday;
-    month = localtime(&tt)->tm_mon;
-    year = localtime(&tt)->tm_year;
+    month = localtime(&tt)->tm_mon + 1;
+    year = localtime(&tt)->tm_year + 1900;
     hour = localtime(&tt)->tm_hour;
     minute = localtime(&tt)->tm_min;
 }
@@ -22,20 +22,21 @@ unsigned int Time::getYear() {
 }
 
 unsigned int Time::getHour() {
-    return year;
+    return hour;
 }
 
 unsigned int Time::getMinute() {
-    return year;
+    return minute;
 }
 
 std::string Time::GetDateAsString() const{
-    return 
+    return (
         ((day < 10) ? ("0" + std::to_string(day)) : (std::to_string(day))) + "." +
         ((month < 10) ? ("0" + std::to_string(month)) : (std::to_string(month))) + "." +
         std::to_string(year) + " " +
-        std::to_string(hour) + ":" +
-        std::to_string(minute);
+        ((hour < 10) ? ("0" + std::to_string(hour)) : (std::to_string(hour))) + ":" +
+        ((minute < 10) ? ("0" + std::to_string(minute)) : (std::to_string(minute)))
+    );
 }
 
 bool Time::operator>(const Time &other) {

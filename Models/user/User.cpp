@@ -1,5 +1,9 @@
 #include "User.h"
 
+User::User() : AbstractUser("No name", "No lastname", 0, "none", "none", Message()) {
+    setIsAdministrator(false);
+}
+
 User::User(std::string name, std::string lastName, int age, std::string login, std::string password, bool isAdministrator, Message message) : AbstractUser(name, lastName, age, login, password, message){
     setIsAdministrator(isAdministrator);
 }
