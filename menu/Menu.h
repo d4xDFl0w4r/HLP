@@ -3,16 +3,17 @@
 
 #include <cstddef>
 #include <string>
+#include "../Vector/vector.h"
 #include "./MenuItem.h"
 
 class Menu {
     public:
-        Menu(string, MenuItem *, size_t);
+        Menu(std::string, const Vector<MenuItem>&, size_t);
         int getSelect() const;
         bool isRun() const;
-        string getTitle();
+        std::string getTitle() const;
         size_t getCount() const;
-        MenuItem *getItems();
+        Vector<MenuItem> getItems() const;
         void print();
         int runCommand();
 
@@ -20,7 +21,7 @@ class Menu {
         int select{-1};
         size_t count{};
         bool running{};
-        string title{};
-        MenuItem *items{};
+        std::string title{};
+        Vector<MenuItem> items;
 };
 #endif //MENU_H

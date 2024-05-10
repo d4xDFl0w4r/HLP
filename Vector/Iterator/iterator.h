@@ -15,33 +15,29 @@ public:
     T& operator*() const;
 
 private:
-    T* m_class;
-    Iterator(T* _p) : m_class(_p) {}
+    T* m_object;
+    Iterator(T* new_object) : m_object(new_object) {}
 };
-
-
-
-//iterator implementation
 
 template <typename T>
 bool Iterator<T>::operator==(const Iterator& _it) const {
-    return m_class == _it.m_class;
+    return m_object == _it.m_object;
 }
 
 template <typename T>
 bool Iterator<T>::operator!=(const Iterator& _it) const {
-    return m_class != _it.m_class;
+    return m_object != _it.m_object;
 }
 
 template <typename T>
 Iterator<T>& Iterator<T>::operator++() {
-    m_class++;
+    m_object++;
     return *this;
 }
 
 template <typename T>
 T& Iterator<T>::operator*() const {
-    return *m_class;
+    return *m_object;
 }
 
-#endif //ITERATOR_H
+#endif

@@ -4,11 +4,12 @@
 #include <iostream>
 #include <string>
 
+#include "../../Vector/vector.h"
 #include "../message/Message.h"
 
 class AbstractUser {
 public:
-    AbstractUser(std::string name, std::string lastName, int age, std::string login, std::string password, Message message);
+    AbstractUser(std::string name, std::string lastName, int age, std::string login, std::string password, Vector<Message> messageHistory);
 
     std::string getName();
     void setName(std::string name);
@@ -25,8 +26,8 @@ public:
     std::string getPassword();
     void setPassword(std::string password);
 
-    Message getMessage();
-    void setMessage(Message message);
+    Vector<Message> getMessageHistory();
+    void setMessage(Vector<Message> messageHistory);
 
     virtual void Print() const = 0;
 
@@ -36,7 +37,7 @@ protected:
     int age;
     std::string login;
     std::string password;
-    Message message;
+    Vector<Message> messageHistory;
 };
 
 #endif //ABSTRACTUSER_H

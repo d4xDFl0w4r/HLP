@@ -1,11 +1,18 @@
 #include "AbstractUser.h"
 
-AbstractUser::AbstractUser(std::string name, std::string lastName, int age, std::string login, std::string password, Message message) : message(message) {
-    this->name = name;
-    this->lastName = lastName;
-    this->age = age;
-    this->login = login;
-    this->password = password;
+AbstractUser::AbstractUser(
+        std::string name,
+        std::string lastName,
+        int age,
+        std::string login,
+        std::string password,
+        Vector<Message> messageHistory
+    ) : messageHistory(messageHistory) {
+        this->name = name;
+        this->lastName = lastName;
+        this->age = age;
+        this->login = login;
+        this->password = password;
 }
 
 
@@ -50,10 +57,10 @@ void AbstractUser::setPassword(std::string password) {
     this->password = password;
 }
 
-Message AbstractUser::getMessage() {
-    return message;
+Vector<Message> AbstractUser::getMessageHistory() {
+    return messageHistory;
 }
 
-void AbstractUser::setMessage(Message message) {
-    this->message = message;
+void AbstractUser::setMessage(Vector<Message> messageHistory) {
+    this->messageHistory = messageHistory;
 }

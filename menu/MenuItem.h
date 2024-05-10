@@ -4,19 +4,17 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
-
- class MenuItem {
+class MenuItem {
 public:
-    typedef int(*Func)();
-    MenuItem(string, Func);
-    string getName();
+    typedef bool (*Function)();
+    MenuItem();
+    MenuItem(std::string name, Function function);
+    std::string getName();
     void print();
-    int run();
+    bool run();
 
 private:
-    Func func{};
-    string item_name{};
+    Function function{};
+    std::string item_name{};
 };
 #endif //MENUITEM_H

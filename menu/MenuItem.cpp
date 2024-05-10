@@ -1,9 +1,9 @@
-#include "./MenuItem.h"
+#include "MenuItem.h"
 
+MenuItem::MenuItem() : item_name("no name"), function(nullptr) {}
+MenuItem::MenuItem(std::string _item_name, Function _function) : item_name(_item_name), function(function) {}
 
-MenuItem::MenuItem(std::string name, Func func) : item_name(name), func(func) {}
-
-string MenuItem::getName() {
+std::string MenuItem::getName() {
     return item_name;
 }
 
@@ -11,6 +11,6 @@ void MenuItem::print() {
     std::cout << item_name;
 }
 
-int MenuItem::run() {
-    return func();
+bool MenuItem::run() {
+    return function();
 }

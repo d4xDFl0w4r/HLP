@@ -11,7 +11,7 @@ void ChatBot::Print() const {
     std::cout << "Age: " << age << std::endl;
     std::cout << "ID: " << login << std::endl;
     std::cout << "API token: " << password << std::endl;
-    std::cout << message;
+    std::cout << messageHistory;
     std::cout << std::endl;
 }
 

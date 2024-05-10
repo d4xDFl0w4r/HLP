@@ -1,6 +1,6 @@
 #include "./Menu.h"
 
-Menu::Menu(string title, MenuItem *items, size_t count) : title(title), items(items), count(count) {}
+Menu::Menu(std::string title, const Vector<MenuItem>& items, size_t count) : title(title), items(items), count(count) {}
 
 int Menu::getSelect() const {
     return select;
@@ -14,11 +14,11 @@ size_t Menu::getCount() const {
     return count;
 }
 
-string Menu::getTitle() {
+std::string Menu::getTitle() const {
     return title;
 }
 
-MenuItem *Menu::getItems() {
+Vector<MenuItem> Menu::getItems() const {
     return items;
 }
 
@@ -41,7 +41,7 @@ int Menu::runCommand() {
         std::cin.ignore(100, '\n');
         std::cout << std::endl;
         if (select < 1 || select > count) {
-            cout << "Number must be in range [1;" << count <<"]" << endl;
+            std::cout << "Number must be in range [1;" << count <<"]" << std::endl;
         } else if (select == 0) {
             return 0;
         } else {

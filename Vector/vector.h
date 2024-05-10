@@ -13,10 +13,10 @@ public:
     typedef Iterator<T> const_iterator;
 
     Vector();
-    Vector(unsigned _size);
-    Vector(T _value);
-    Vector(unsigned _size, T _value);
-    Vector(std::initializer_list<T> _initList);
+    Vector(unsigned size);
+    Vector(T value);
+    Vector(unsigned size, T value);
+    Vector(std::initializer_list<T> initList);
 
     ~Vector();
 
@@ -29,16 +29,15 @@ public:
 
     size_t size() const;
 
-    void insert(const T& _value, const size_t& index);
-    void push_back(const T& _value);
+    void insert(const T& value, const size_t& index);
+    void push_back(const T& value);
 
     void pop();
     void erase(const size_t& index);
+    void erase(const size_t& begin, const size_t& end);
     void clear();
 
-    void sort(bool ascendingOrder);
-
-    T operator[](size_t index) const;
+    T& operator[](size_t index);
 
 private:
     T* m_array{};
@@ -49,57 +48,54 @@ private:
 template <typename T>
 std::ostream& operator<<(std::ostream& out, const Vector<T>& vector);
 
-//vector implementation
-
-
 template <typename T>
 Vector<T>::Vector() : m_array(nullptr), m_end(nullptr), m_size(0) {}
 
 template <typename T>
-Vector<T>::Vector(unsigned _size) : m_size(_size)
+Vector<T>::Vector(unsigned size) : m_size(size)
 {
     m_array = new T[m_size];
     if (m_size)
     {
-        T _temp;
+        T temp;
         for (int i = 0; i < m_size; ++i)
         {
-            m_array[i] = _temp;
+            m_array[i] = temp;
         }
     }
     setEnd();
 }
 
 template <typename T>
-Vector<T>::Vector(T _value) {
+Vector<T>::Vector(T value) {
     m_array = new T[1];
-    T _temp;
-    m_array[0] = _temp;
+    T temp;
+    m_array[0] = temp;
     setEnd();
 }
 
 template <typename T>
-Vector<T>::Vector(unsigned _size, T _value) : m_size(_size)
+Vector<T>::Vector(unsigned size, T value) : m_size(size)
 {
     m_array = new T[m_size];
     if (m_size)
     {
-        m_array[0] = _value;
-        T _temp;
+        m_array[0] = value;
+        T temp;
         for (int i = 1; i < m_size; ++i)
         {
-            m_array[i] = _temp;
+            m_array[i] = temp;
         }
     }
     setEnd();
 }
 
 template <typename T>
-Vector<T>::Vector(std::initializer_list<T> _initList) {
-    m_size = _initList.size();
+Vector<T>::Vector(std::initializer_list<T> initList) {
+    m_size = initList.size();
     m_array = new T[m_size];
     int i = 0;
-    for (auto arg : _initList) {
+    for (auto arg : initList) {
         m_array[i++] = arg;
     }
     setEnd();
@@ -107,8 +103,8 @@ Vector<T>::Vector(std::initializer_list<T> _initList) {
 
 template <typename T>
 Vector<T>::~Vector() {
-    delete [] m_array;
-    delete m_end;
+    m_array = nullptr;
+    m_end = nullptr;
     m_size = 0;
 }
 
@@ -131,28 +127,31 @@ template <typename T>
 size_t Vector<T>::size() const { return m_size; }
 
 template <typename T>
-void Vector<T>::insert(const T& _value, const size_t& index) {
-    T* tmp_array = new T[m_size++];
-    for (int i = 0; i < index; i++) { tmp_array[i] = m_array[i]; }
-    tmp_array[index] = _value;
-    for (int i = index + 1; i < m_size; i++) { tmp_array[i] = m_array[i - 1]; }
+void Vector<T>::insert(const T& value, const size_t& index) {
+    T* buff_array = new T[++m_size];
+    for (int i = 0; i < index; i++) { buff_array[i] = m_array[i]; }
+    buff_array[index] = value;
+    for (int i = index + 1; i < m_size; i++) { buff_array[i] = m_array[i - 1]; }
     delete[] m_array;
-    m_array = tmp_array;
+    m_array = buff_array;
     setEnd();
 }
 
 template <typename T>
-void Vector<T>::push_back(const T& _value) {
+void Vector<T>::push_back(const T& value) {
     if (m_size == 0) {
-        m_array = new T[]{_value};
+        m_array = new T[]{ value };
         m_size++;
         m_end = m_array;
-    } else {
-        T* tmp_array = new T[++m_size];
-        memcpy(tmp_array, m_array, (m_size - 1) * sizeof(T));
+    }
+    else {
+        T* buff_array = new T[++m_size]();
+        for (int i = 0; i < m_size - 1; i++) {
+            buff_array[i] = m_array[i];
+        }
         delete[] m_array;
-        tmp_array[m_size - 1] = _value;
-        m_array = tmp_array;
+        buff_array[m_size - 1] = value;
+        m_array = buff_array;
         setEnd();
     }
 }
@@ -160,58 +159,63 @@ void Vector<T>::push_back(const T& _value) {
 template <typename T>
 void Vector<T>::pop() {
     if (m_size == 0) { return; }
-    T* tmp_array = new T[m_size--];
-    memcpy(tmp_array, m_array, m_size);
+    T* buff_array = new T[m_size--];
+    memcpy(buff_array, m_array, m_size);
     delete[] m_array;
-    m_array = tmp_array;
+    m_array = buff_array;
     setEnd();
 }
 
 template <typename T>
 void Vector<T>::erase(const size_t& index) {
-    T* tmp_array = new T[m_size--];
-    size_t tmp_i = 0;
+    if (
+        index < 0 ||
+        index > m_size - 1
+    ) { return; }
+
+    T* buff_array = new T[--m_size];
+    size_t buff_i = 0;
     for (int i = 0; i < m_size + 1; i++) {
         if (i == index) { continue; }
-        tmp_array[tmp_i] = m_array[i++];
+        buff_array[buff_i++] = m_array[i];
     }
     delete[] m_array;
-    m_array = tmp_array;
+    m_array = buff_array;
+    setEnd();
+}
+
+template <typename T>
+void Vector<T>::erase(const size_t& begin, const size_t& end) {
+    if (
+        begin < 0 ||
+        begin > m_size - 1 ||
+        end < 0 ||
+        end > m_size - 1 ||
+        begin > end
+    ) { return; }
+
+    T* buff_array = new T[--m_size];
+    size_t buff_i = 0;
+    for (int i = 0; i < m_size + 1; i++) {
+        if (i >= begin && i <= end) { continue; }
+        buff_array[buff_i++] = m_array[i];
+    }
+    delete[] m_array;
+    m_array = buff_array;
     setEnd();
 }
 
 template <typename T>
 void Vector<T>::clear() {
+    if (m_size == 0) { return; }
     delete[] m_array;
+    m_end = nullptr;
+    m_size = 0;
     this = new Vector();
 }
 
 template <typename T>
-void Vector<T>::sort(bool ascendingOrder) {
-    if (m_size < 2) {
-        return;
-    }
-    if (ascendingOrder) {
-        for (size_t i = 0; i < m_size - 1; i++) {
-            if (m_array[i] > m_array[i + 1]) {
-                T tmp = m_array[i];
-                m_array[i] = m_array[i + 1];
-                m_array[i + 1] = tmp;
-            }
-        }
-    } else {
-        for (size_t i = 0; i < m_size - 1; i++) {
-            if (m_array[i] < m_array[i + 1]) {
-                T tmp = m_array[i];
-                m_array[i] = m_array[i + 1];
-                m_array[i + 1] = tmp;
-            }
-        }
-    }
-}
-
-template <typename T>
-std::ostream& operator<<(std::ostream& out, const Vector<T> vec) {
+std::ostream& operator<<(std::ostream& out, const Vector<T>& vec) {
     for (auto iter : vec) {
         out << iter;
     }
@@ -220,12 +224,14 @@ std::ostream& operator<<(std::ostream& out, const Vector<T> vec) {
 };
 
 template <typename T>
-T Vector<T>::operator[](size_t index) const{
-    try {
-        return m_array[index];
-    } catch (std::logic_error error) {
-        throw error;
+T& Vector<T>::operator[](size_t index) {
+    if (
+        m_size == 0 ||
+        index >= m_size
+    ) {
+        throw "index out of range";
     }
+    else { return m_array[index]; }
 }
 
-#endif //VECTOR_H
+#endif

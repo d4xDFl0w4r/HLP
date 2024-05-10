@@ -1,17 +1,18 @@
 #include "menu/Menu.h"
 #include "menu/MenuItem.h"
+
 #include "Models/chatbot/Chatbot.h"
 #include "Models/user/User.h"
 #include "Models/message/Message.h"
 
+#include "Vector/vector.h"
+
+#include "user_functions/user_functions.h"
+
 #include <ctime>
-#include "Vector/Vector.h"
 
 using namespace std;
 
-const int MAIN_MENU_ITEMS_NUMBER = 7;
-const int USER_MENU_ITEMS_NUMBER = 5;
-const int ADMIN_MENU_ITEMS_NUMBER = 4;
 
 
 Message message (
@@ -68,237 +69,97 @@ Vector<User> userList {
 };
 
 
-ostream& operator<<(ostream& out, Vector<Message> &vec) {
-    for (auto &element : vec) {
-        out << element;
-    }
-    return out;
+
+bool Exit() { return false; }
+
+
+// user functions
+
+bool AddMessage() {
+    usermenu::AddMessage(messageHistory);
+    return true;
 }
 
-void operator<<(Vector<Message> &vec, const Message &message) {
-    vec.push_back(message);
-}
-void operator<<(Vector<User> &vec, const User &user) {
-    vec.push_back(user);
+bool DeleteMessage() {
+    usermenu::DeleteMessage(messageHistory);
+    return true;
 }
 
-void operator-(Vector<Message> &vec, const int &index) {
-    vec.erase(index);
-}
-void operator-(Vector<User> &vec, const int &index) {
-    vec.erase(index);
+bool SortMessages() {
+    usermenu::SortMessages(messageHistory);
+    return true;
 }
 
-
-int SayHelloToUser() {
-    cout << "Hello, User!" << endl;
-    return 1;
-}
-
-int GetRandomNumber() {
-    srand(time(nullptr));
-    int min{}, max{};
-    cout << "Min number: ";
-    cin >> min;
-    cout << "Max number: ";
-    cin >> max;
-    cout << min + rand() % (max - min + 1) << endl;
-    return 2;
-}
-
-int PrintGoose() {
-    cout << "                                   ___" << endl;
-    cout << "                               ,-\"\"   `." << endl;
-    cout << "                             ,'  _   e )`-._" << endl;
-    cout << "                            /  ,' `-._<.===-'" << endl;
-    cout << "                           /  /" << endl;
-    cout << "                          /  ;" << endl;
-    cout << "          _              /   ;" << endl;
-    cout << " (`._    _.-\"\" \"\"--..__,'    |" << endl;
-    cout << " <_  `-\"\"                     \"" << endl;
-    cout << "  <`-                          :" << endl;
-    cout << "   (__   <__.                  ;" << endl;
-    cout << "     `-.   '-.__.      _.'    /" << endl;
-    cout << "        \\      `-.__,-'    _,'" << endl;
-    cout << "         `._    ,    /__,-'" << endl;
-    cout << "            \"\"._\\__,'< <____" << endl;
-    cout << "                 | |  `----.`." << endl;
-    cout << "                 | |        \\ `." << endl;
-    cout << "                 ; |___      \\-``" << endl;
-    cout << "                 \\   --<" << endl;
-    cout << "                  `.`.<" << endl;
-    cout << "                    `-'" << endl;
-    return 3;
-}
-
-int TestObjects() {
-    cout << "Object Message" << endl;
-    message.Print();
-    cout << "\n\n";
-
-    cout << "Object User" << endl;
-    user.Print();
-    cout << "\n";
-
-    cout << "Object ChatBot" << endl;
-    bot.Print();
-    return 4;
-}
-
-int UserMenu();
-int AdminMenu();
-
-int Exit() {
-    return 0;
-}
-
-int Exit2() {
-    return 0;
-}
-
-int AddMessage() {
-    string id = "";
-    cout << "id: ";
-    getline(cin, id);
-    string text = "";
-    cout << "Message text: ";
-    getline(cin, text);
-    string sender = "";
-    cout << "Sender: ";
-    getline(cin, sender);
-    messageHistory << Message(
-        stoi(id),
-        text,
-        sender
-    );
-    return 1;
-}
-
-int DeleteMessage() {
-    string id = "";
-    cout << "Id of message that should be deleted: ";
-    getline(cin, id);
-    size_t index = 0;
-    for (auto& message : messageHistory) {
-        if (to_string(message.getID()) == id) {
-            messageHistory - index;
-            return 1;
-        }
-        index++;
-    }
-    return 2;
-}
-
-int SortMessages() {
-    if (messageHistory.size() < 2) {
-        return 3;
-    }
-    for (size_t i = 0; i < messageHistory.size() - 1; i++) {
-        if (messageHistory[i] > messageHistory[i + 1]) {
-            Message tmp = messageHistory[i];
-            messageHistory[i] = messageHistory[i + 1];
-            messageHistory[i + 1] = tmp;
-        }
-    }
-    return 3;
-}
-
-int PrintMessages() {
-    for (const auto& message : messageHistory) {
-        cout << message << endl;
-    }
-    return 4;
+bool PrintMessages() {
+    usermenu::PrintMessages(messageHistory);
+    return true;
 }
 
 
-int DeleteUser() {
-    string login = "";
-    cout << "Login of user who should be deleted: ";
-    getline(cin, login);
-    size_t index = 0;
-    for (auto& user : userList) {
-        if (user.getLogin() == login) {
-            userList - index;
-            return 1;
-        }
-        index++;
-    }
-    cout << "There are no users with this login: " << login << endl;
-    return 1;
+// administrator functions
+
+bool DeleteUser() {
+    adminmenu::DeleteUser(userList);
+    return true;
 }
 
-int SortUsers() {
-    if (userList.size() < 2) {
-        return 2;
-    }
-    for (size_t i = 0; i < userList.size() - 1; i++) {
-        if (userList[i] > userList[i + 1]) {
-            User tmp = userList[i];
-            userList[i] = userList[i + 1];
-            userList[i + 1] = tmp;
-        }
-    }
-    return 2;
+bool SortUsers() {
+    adminmenu::SortUsers(userList);
+    return true;
 }
 
-int PrintUsers() {
-    for (const auto& user : userList) {
-        cout << user << endl;
-    }
-    return 3;
+bool PrintUsers() {
+    adminmenu::PrintUsers(userList);
+    return true;
 }
 
 
-vector< {
-    MenuItem("Say hello to user", SayHelloToUser), 
-    MenuItem("Get random number", GetRandomNumber), 
-    MenuItem("Print Goose", PrintGoose),
-    MenuItem("Test objects", TestObjects),
+// menu functions prototypes
+
+bool UserMenu();
+bool AdminMenu();
+
+
+// menu objects
+
+Vector<MenuItem> mainMenuItems {
     MenuItem("User menu", UserMenu),
     MenuItem("Admin menu", AdminMenu),
     MenuItem("Exit", Exit)
 };
-Menu mainMenu("Program menu", mainMenuItems, MAIN_MENU_ITEMS_NUMBER);
+Menu mainMenu("Program menu", mainMenuItems, mainMenuItems.size());
 
-MenuItem userMenuItems[USER_MENU_ITEMS_NUMBER] {
+Vector<MenuItem> userMenuItems {
     MenuItem("Write message", AddMessage),
     MenuItem("Delete message", DeleteMessage),
     MenuItem("Sort messages history", SortMessages),
     MenuItem("Print messages history", PrintMessages),
-    MenuItem("Return to main menu", Exit2)
+    MenuItem("Return to main menu", Exit)
 };
-Menu userMenu("User menu", userMenuItems, USER_MENU_ITEMS_NUMBER);
+Menu userMenu("User menu", userMenuItems, userMenuItems.size());
 
-MenuItem adminMenuItems[ADMIN_MENU_ITEMS_NUMBER] {
+Vector<MenuItem> adminMenuItems {
     MenuItem("Delete user", DeleteUser),
     MenuItem("Sort users", SortUsers),
     MenuItem("Print users", PrintUsers),
     MenuItem("Return to main menu", Exit)
 };
-Menu adminMenu("Admin menu", adminMenuItems, ADMIN_MENU_ITEMS_NUMBER);
+Menu adminMenu("Admin menu", adminMenuItems, adminMenuItems.size());
 
-int UserMenu() {
-    while(userMenu.runCommand());
-    return 5;
+
+// menu functions
+
+bool UserMenu() {
+    menu::UserMenu(userMenu);
+    return true;
 }
 
-int AdminMenu() {
-    cout << "Login: ";
-    string login = "";
-    getline(cin, login);
-    cout << "Password: ";
-    string password = "";
-    getline(cin, password);
-    if (
-        login == "admin" &&
-        password == "1234"    
-    ) {
-        while(adminMenu.runCommand());
-    } else {
-        cout << "This user is not among the administrators" << endl;
-    }
-    return 6;
+bool AdminMenu() {
+    menu::AdminMenu(adminMenu, userList);
+    return true;
 }
+
+
 
 int main() {
     while(mainMenu.runCommand());

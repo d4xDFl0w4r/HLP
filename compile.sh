@@ -1,1 +1,1 @@
-g++ -o chatbot.exe chatbot.cpp menu/Menu.cpp menu/MenuItem.cpp Models/abstract_user/AbstractUser.cpp Models/chatbot/Chatbot.cpp Models/message/Message.cpp Models/user/User.cpp time/Time.cpp Vector/vector.cpp Vector/Iterator/iterator.cpp
+g++ -g -o .build/chatbot.out chatbot.cpp menu/Menu.cpp menu/MenuItem.cpp Models/abstract_user/AbstractUser.cpp Models/chatbot/Chatbot.cpp Models/message/Message.cpp Models/user/User.cpp time/Time.cpp program_functions/program_functions.cpp user_functions/user_functions.cpp

@@ -24,7 +24,7 @@ void User::Print() const {
     std::cout << "Login: " << login << std::endl;
     std::cout << "Password: " << password << std::endl;
     std::cout << "Administrator: " << std::boolalpha << isAdministrator << std::endl;
-    message.Print();
+    std::cout << messageHistory;
     std::cout << std::endl;
 }
 
