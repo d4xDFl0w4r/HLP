@@ -32,7 +32,7 @@ void Menu::print() {
     std::cout << std::endl;
 }
 
-int Menu::runCommand() {
+bool Menu::runCommand() {
     print();
     std::cout << "\tSelect >> ";
     for (;;) {

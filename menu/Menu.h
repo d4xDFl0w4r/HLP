@@ -15,7 +15,7 @@ class Menu {
         size_t getCount() const;
         Vector<MenuItem> getItems() const;
         void print();
-        int runCommand();
+        bool runCommand();
 
     private:
         int select{-1};
