@@ -9,7 +9,7 @@
 
 class AbstractUser {
 public:
-    AbstractUser(std::string name, std::string lastName, int age, std::string login, std::string password, Vector<Message> messageHistory);
+    AbstractUser(std::string name, std::string lastName, int age, std::string login, std::string password);
 
     std::string getName();
     void setName(std::string name);

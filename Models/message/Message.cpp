@@ -46,10 +46,12 @@ void Message::setTime() {
 }
 
 void Message::Print() const {
+    std::cout << std::endl;
     std::cout << "ID: " << id << std::endl;
     std::cout << "Message: " << text << std::endl;
     std::cout << "Sender: " << sender << std::endl;
     std::cout << "Time: " << time.GetDateAsString() << std::endl;
+    std::cout << std::endl;
 }
 
 bool Message::operator>(const Message& other) {

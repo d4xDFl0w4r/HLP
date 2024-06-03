@@ -34,18 +34,23 @@ void Menu::print() {
 
 bool Menu::runCommand() {
     print();
-    std::cout << "\tSelect >> ";
     for (;;) {
-        std::cin >> select;
-        std::cin.clear();
-        std::cin.ignore(100, '\n');
+        std::cout << "\n\tSelect >> ";
+        std::string buffstring = "";
+        getline(std::cin, buffstring);
         std::cout << std::endl;
-        if (select < 1 || select > count) {
-            std::cout << "Number must be in range [1;" << count <<"]" << std::endl;
-        } else if (select == 0) {
-            return 0;
-        } else {
+        try {
+            select = stoi(buffstring);
+            if (select < 1 || select > count) {
+                throw std::out_of_range("out_of_range");
+            }
             return items[select - 1].run();
+        } catch (const std::out_of_range& err) {
+            std::cerr << "Error type: " << err.what() << std::endl;
+            std::cerr << "Number must be in range [1;" << count <<"]" << std::endl;
+        } catch (const std::invalid_argument& err) {
+            std::cerr << "Error type: " << err.what() << " - string to int conversion error" << std::endl;
+            std::cerr << "Input must be a number" << std::endl;
         }
     }
 }

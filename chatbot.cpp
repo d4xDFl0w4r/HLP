@@ -15,60 +15,36 @@ using namespace std;
 
 
 
-Message message (
-    1,
+Message testMessage (
+    0,
     "Test Message",
-    "Admin"
+    "System"
 );
 
 ChatBot bot (
     "Chat",
     "Bot",
     0,
-    "chatbot@bot.api",
-    "H@(*hsad8@!hldsidopf&E*rfh23heH*!dsa",
-    Message (
-        3,
-        "Hello, Daniel!",
-        "Chat Bot"
-    )
-);
-
-User user (
-    "Daniel",
-    "Verdanov",
-    18,
-    "noreply@mail.com",
-    "fjak12fda@e",
-    true,
-    Message (
-        2,
-        "Hello, Bot!",
-        "Daniel Verdanov"
-    )
+    "chatbot",
+    "H@(*hsad8@!hldsidopf&E*rfh23heH*!dsa"
 );
 
 Vector<Message> messageHistory {
-    message
+    testMessage
 };
+
 Vector<User> userList {
-    user, 
     User (
-        "Prosto",
-        "User",
-        21,
-        "user123@mail.com",
-        "lasdkewf",
-        false,
-        Message (
-            5,
-            "Hello, Mir!",
-            "Prosto User"
-        )
+        "Admin",
+        "Adminov",
+        22,
+        "admin",
+        "1234",
+        true
     )
 };
 
-
+string currentUser = "";
 
 bool Exit() { return false; }
 
@@ -76,17 +52,12 @@ bool Exit() { return false; }
 // user functions
 
 bool AddMessage() {
-    usermenu::AddMessage(messageHistory);
+    usermenu::AddMessage(messageHistory, bot, currentUser);
     return true;
 }
 
 bool DeleteMessage() {
     usermenu::DeleteMessage(messageHistory);
-    return true;
-}
-
-bool SortMessages() {
-    usermenu::SortMessages(messageHistory);
     return true;
 }
 
@@ -132,7 +103,6 @@ Menu mainMenu("Program menu", mainMenuItems, mainMenuItems.size());
 Vector<MenuItem> userMenuItems {
     MenuItem("Write message", AddMessage),
     MenuItem("Delete message", DeleteMessage),
-    MenuItem("Sort messages history", SortMessages),
     MenuItem("Print messages history", PrintMessages),
     MenuItem("Return to main menu", Exit)
 };
@@ -150,7 +120,7 @@ Menu adminMenu("Admin menu", adminMenuItems, adminMenuItems.size());
 // menu functions
 
 bool UserMenu() {
-    menu::UserMenu(userMenu);
+    menu::UserMenu(userMenu, userList, currentUser);
     return true;
 }
 

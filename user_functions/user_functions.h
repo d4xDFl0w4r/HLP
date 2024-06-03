@@ -10,15 +10,14 @@
 void SayHelloToUser(std::string user);
 
 namespace menu {
-    void UserMenu(Menu& userMenu);
+    void UserMenu(Menu& userMenu, Vector<User>& userList, std::string& currentUser);
     void AdminMenu(Menu& adminMenu, const Vector<User>& userList);
 } // namespace menu
 
 
 namespace usermenu {
-    void AddMessage(Vector<Message>& messageHistory);
+    void AddMessage(Vector<Message>& messageHistory, ChatBot& bot, std::string& currentUser);
     void DeleteMessage(Vector<Message>& messageHistory);
-    void SortMessages(Vector<Message>& messageHistory);
     void PrintMessages(const Vector<Message>& messageHistory);
 } // namespace user
 

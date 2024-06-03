@@ -5,9 +5,8 @@ AbstractUser::AbstractUser(
         std::string lastName,
         int age,
         std::string login,
-        std::string password,
-        Vector<Message> messageHistory
-    ) : messageHistory(messageHistory) {
+        std::string password
+    ) {
         this->name = name;
         this->lastName = lastName;
         this->age = age;

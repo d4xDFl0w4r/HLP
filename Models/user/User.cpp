@@ -1,10 +1,10 @@
 #include "User.h"
 
-User::User() : AbstractUser("No name", "No lastname", 0, "none", "none", Message()) {
+User::User() : AbstractUser("No name", "No lastname", 0, "none", "none") {
     setIsAdministrator(false);
 }
 
-User::User(std::string name, std::string lastName, int age, std::string login, std::string password, bool isAdministrator, Message message) : AbstractUser(name, lastName, age, login, password, message){
+User::User(std::string name, std::string lastName, int age, std::string login, std::string password, bool isAdministrator) : AbstractUser(name, lastName, age, login, password){
     setIsAdministrator(isAdministrator);
 }
 
@@ -47,7 +47,13 @@ std::istream& operator>>(std::istream& in, User& user) {
     user.setLastName(buff);
     std::cout << "Age: ";
     getline(in, buff);
-    user.setAge(stoi(buff));
+    try {
+        user.setAge(stoi(buff));
+    } catch (const std::invalid_argument& err) {
+        std::cerr << "Error type: " << err.what() << " - string to int conversion error" << std::endl;
+        std::cerr << "Input must be a number" << std::endl;
+        user.setAge(0);
+    }
     std::cout << "Login: ";
     getline(in, buff);
     user.setLogin(buff);

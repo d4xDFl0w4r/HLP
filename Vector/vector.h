@@ -54,7 +54,14 @@ Vector<T>::Vector() : m_array(nullptr), m_end(nullptr), m_size(0) {}
 template <typename T>
 Vector<T>::Vector(unsigned size) : m_size(size)
 {
-    m_array = new T[m_size];
+    try {
+        m_array = new T[m_size];
+    } catch (const std::bad_alloc& err) {
+        std::cerr << "Error type: " << err.what() << std::endl;
+        std::cerr << "Not enough memory" << std::endl;
+        m_size = 0;
+    }
+    
     if (m_size)
     {
         T temp;
@@ -77,7 +84,14 @@ Vector<T>::Vector(T value) {
 template <typename T>
 Vector<T>::Vector(unsigned size, T value) : m_size(size)
 {
-    m_array = new T[m_size];
+    try {
+        m_array = new T[m_size];
+    } catch (const std::bad_alloc& err) {
+        std::cerr << "Error type: " << err.what() << std::endl;
+        std::cerr << "Not enough memory" << std::endl;
+        m_size = 0;
+    }
+
     if (m_size)
     {
         m_array[0] = value;
@@ -93,7 +107,13 @@ Vector<T>::Vector(unsigned size, T value) : m_size(size)
 template <typename T>
 Vector<T>::Vector(std::initializer_list<T> initList) {
     m_size = initList.size();
-    m_array = new T[m_size];
+    try {
+        m_array = new T[m_size];
+    } catch (const std::bad_alloc& err) {
+        std::cerr << "Error type: " << err.what() << std::endl;
+        std::cerr << "Not enough memory" << std::endl;
+        m_size = 0;
+    }
     int i = 0;
     for (auto arg : initList) {
         m_array[i++] = arg;
@@ -128,7 +148,14 @@ size_t Vector<T>::size() const { return m_size; }
 
 template <typename T>
 void Vector<T>::insert(const T& value, const size_t& index) {
-    T* buff_array = new T[++m_size];
+    T* buff_array;
+    try {
+        buff_array = new T[++m_size];
+    } catch (const std::bad_alloc& err) {
+        std::cerr << "Error type: " << err.what() << std::endl;
+        std::cerr << "Not enough memory" << std::endl;
+    }
+    
     for (int i = 0; i < index; i++) { buff_array[i] = m_array[i]; }
     buff_array[index] = value;
     for (int i = index + 1; i < m_size; i++) { buff_array[i] = m_array[i - 1]; }
@@ -145,7 +172,14 @@ void Vector<T>::push_back(const T& value) {
         m_end = m_array;
     }
     else {
-        T* buff_array = new T[++m_size]();
+        T* buff_array;
+        try {
+            buff_array = new T[++m_size];
+        } catch (const std::bad_alloc& err) {
+            std::cerr << "Error type: " << err.what() << std::endl;
+            std::cerr << "Not enough memory" << std::endl;
+        }
+    
         for (int i = 0; i < m_size - 1; i++) {
             buff_array[i] = m_array[i];
         }
@@ -225,13 +259,16 @@ std::ostream& operator<<(std::ostream& out, const Vector<T>& vec) {
 
 template <typename T>
 T& Vector<T>::operator[](size_t index) {
-    if (
-        m_size == 0 ||
-        index >= m_size
-    ) {
-        throw "index out of range";
+    try {
+        if (index < 0 || index >= m_size) {
+            throw std::out_of_range("out_of_range");
+        }
+        return m_array[index];
+    } catch (const std::out_of_range& err) {
+        std::cerr << "Error type: " << err.what() << std::endl;
+        std::cerr << "Index must be in range [0; " << m_size - 1 << "]" << std::endl;
+        return m_array[0];
     }
-    else { return m_array[index]; }
 }
 
 #endif
